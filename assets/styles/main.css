@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    color: whitesmoke;
+  }
+  
+  *::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
+  body{
+    background-color: #1b1b1b;
+  }
+
+  .campoEstrellas{
+    position: relative;
+  }
+
+  .estrella{
+    position: absolute;
+    top: -5vh;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: white;
+    animation: estrellaCae linear infinite;
+  }
+
+  @keyframes estrellaCae{ 
+    0% {
+        top: -5vh;
+    }
+
+    100% {
+        top: 100vh;
+    }
+    
+  }

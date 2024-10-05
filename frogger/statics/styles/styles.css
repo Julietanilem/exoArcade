@@ -1,0 +1,76 @@
+@font-face {
+    font-family: FontTexto;
+    src: url(../fonts/Press_Start_2P/PressStart2P-Regular.ttf);
+}
+
+@font-face {
+    font-family: FontMensaje;
+    src: url(../fonts/Oxanium/Oxanium-VariableFont_wght.ttf);
+}
+
+#spaceTravel{
+    position: relative;
+    top: 1vw;
+    left: 10vw;
+    width: 80%;
+    height: 60%;
+}
+.contenedor{
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+.cabeza{
+    left: 15%;
+    font-family: FontTexto;
+    position: relative;
+    font-size: 0.8vw;
+    color: aliceblue;
+    margin: 1%;
+}
+.titulo{
+    box-sizing: border-box;
+    margin-left: 10vw;
+    /* text-align: center; */
+    font-family: FontTexto;
+    font-size: 3vw;
+    color: #FFFFFF;
+}
+.botones{
+    display: flex;
+    position: absolute;
+    left: 45%;
+    top: 70%;
+}
+.boton{
+    font-family: FontTexto;
+    font-size: 8pt;
+    border-radius: 35px;
+    border: none;
+    background-color: rgb(14, 91, 157);
+    color: white;
+    margin-left:1vw;    
+    margin-top: 4vw;
+    padding: 0.7vw;
+}
+
+.boton:hover {
+    cursor: pointer;
+    background: #7e64e8;
+}
+
+.boton:active {
+    transform: scale(0.90)
+}
+
+#mensaje{
+    font-family: FontMensaje;
+    font-size: 1.4vw ;
+    position:absolute;
+    top:88vh;
+    color:#FFFFFF;
+    left:43vw;
+    /* background-color: #FFFFFF; */
+}
