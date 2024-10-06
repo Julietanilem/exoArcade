@@ -74,8 +74,6 @@ function sendMessage() {
         body: JSON.stringify({
             answer: userMessage,
             correct_answer: correctAnswer,
-            question: conversation.dataset.question,
-            answers: conversation.dataset.answers
         })
     })
     .then(response => response.json())
