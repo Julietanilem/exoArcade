@@ -16,7 +16,6 @@
     place-items: center;
   }
 
-  /* media querie celulares */
   @media (max-width: 600px) {
     .contenedorCabina img{
       width: 100%!important;
