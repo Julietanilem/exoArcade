@@ -71,7 +71,29 @@ class Planeta {
     }
 
 }
-
+function pausarJuego(){
+    if(!pausa)
+        {
+            pausar.innerHTML="Seguir";
+            pausa=true;
+            clearInterval(contador);
+        }
+        else{
+            pausar.innerHTML="Pausa";
+            pausa=false;
+            contador=setInterval(()=>{
+                jugado+=1;
+                tiempo.innerHTML="Tiempo: "+ jugado;
+                // console.log(contando);
+                contando=true;
+            }, 1000);
+            infos = document.querySelectorAll(".info");
+            console.log(infos);
+            for(info of infos){
+                info.style.display="none";
+            }
+        }
+}
 function inicioNaves()
 {
     cohete1.dx = 200;
@@ -169,6 +191,7 @@ fetch("../data.json").then((response)=>response.json()).then((data)=>
             planeta.img = new Image();
             planeta.img.src = imagenes[planetas.indexOf(planeta)];
             console.log(planeta.img.src);  
+            llenarInfo(exoplanetasDestino[planetas.indexOf(planeta)], document.getElementsByClassName("info")[planetas.indexOf(planeta)]);
         }
     
         // el maximo debe medir 120, despues 100, 80 y 60
@@ -176,10 +199,10 @@ fetch("../data.json").then((response)=>response.json()).then((data)=>
 
          maxTam = Math.max(exoplanetasDestino[0].pl_rade, exoplanetasDestino[1].pl_rade, exoplanetasDestino[2].pl_rade, exoplanetasDestino[3].pl_rade);
         
-        planeta1.tamano = 2 * (exoplanetasDestino[0].pl_rade / maxTam)| 80;
-        planeta2.tamano = 2 * (exoplanetasDestino[1].pl_rade/ maxTam) | 90;
-        planeta3.tamano = 2 * (exoplanetasDestino[2].pl_rade / maxTam) | 80;
-        planeta4.tamano = 2 * (exoplanetasDestino[3].pl_rade/ maxTam) | 100;
+        planeta1.tamano = 2 * (exoplanetasDestino[0].pl_rade / maxTam)| 120;
+        planeta2.tamano = 2 * (exoplanetasDestino[1].pl_rade/ maxTam) | 120;
+        planeta3.tamano = 2 * (exoplanetasDestino[2].pl_rade / maxTam) | 120;
+        planeta4.tamano = 2 * (exoplanetasDestino[3].pl_rade/ maxTam) | 120;
         
         console.log(planeta1.tamano);
         console.log(planeta2.tamano);
@@ -449,33 +472,42 @@ document.addEventListener("keydown", (evento)=>{
             mensaje.innerText="Lleva esta navecita hasta " + exoplanetasDestino[1].pl_name;
             if(llegoMarte==0)
             { 
+                pausarJuego();
+                mostrarInfo(1);
                 audioGana.volume=0.8;
                 audioGana.play();
                 llegoMarte=1;
+               
                 
             }
             cohete1.dibujar();
         }
         if(cohete2.dx<=posXTercera+70 && cohete2.dx>=posXTercera+10 && cohete2.dy<=20 && cohete2.dy>=0)
         {   
-            mostrarInfo(exoplanetasDestino[2]);
+            console.log(posXTercera);
+            console.log(cohete3.dx);
             elegido=cohete3;
             mensaje.innerText="Lleva esta navecita hacia " + exoplanetasDestino[2].pl_name;
             cohete2.dibujar();
             if(llegoNeptuno==0)
             { 
+                pausarJuego();
+                mostrarInfo(2);
                 audioGana.volume=0.8;
                 audioGana.play();
                 llegoNeptuno=1;  
             }
         }
-        if(cohete3.dx<=posXSegunda+115 && cohete3.dx>=posXSegunda+75 && cohete3.dy<=40 && cohete3.dy>=0)
+        if(cohete3.dx<=posXSegunda+105 && cohete3.dx>=posXSegunda+40 && cohete3.dy<=44 && cohete3.dy>=0)
         {
+            
             elegido=cohete4;
             mensaje.innerText="Lleva esta navecita hacia"+ exoplanetasDestino[3].pl_name;
             cohete3.dibujar();
             if(llegoSaturno==0)
             { 
+                pausarJuego();
+                mostrarInfo(3);
                 audioGana.volume=0.8;
                 audioGana.play();
                 llegoSaturno=1;
@@ -484,13 +516,16 @@ document.addEventListener("keydown", (evento)=>{
         }
         if(cohete4.dx<=posXCuarta+70 && cohete4.dx>=posXCuarta+10 && cohete4.dy<=40 && cohete4.dy>=0)
         {
+            
             elegido=null;
             cohete4.dibujar();
             if(llegoNeptuno==0)
             { 
+                pausarJuego();
                 audioGana.volume=0.8;
                 audioGana.play();
                 llegoTierra=1;
+                mostrarInfo(4);
                 
             }
         }
@@ -501,8 +536,6 @@ document.addEventListener("keydown", (evento)=>{
                 moverC(elegido, evento.key);
             //     window.requestAnimationFrame(dibujarCohete);
             // }
-           
-            
         }
         else{
             audioGano.duration= 4;
@@ -650,27 +683,57 @@ function dibujar(){
 ///////////PAUSA////////
 const pausar = document.getElementById("pausa");
 var pausa = false;
-pausar.addEventListener("click", (evento)=>{
-    if(!pausa)
-    {
-        pausar.innerHTML="Seguir";
-        pausa=true;
-        clearInterval(contador);
-    }
-    else{
-        pausar.innerHTML="Pausa";
-        pausa=false;
-        contador=setInterval(()=>{
-            jugado+=1;
-            tiempo.innerHTML="Tiempo: "+ jugado;
-            // console.log(contando);
-            contando=true;
-        }, 1000);
-    }
-});
+pausar.addEventListener("click", (evento)=>pausarJuego());
 
-function mostrarInfo(exoplaneta){
+
+
+function llenarInfo(exoplaneta, info){
     
+    info.innerHTML = "¡Genial! LLegaste a ";
+    if(exoplaneta.pl_name != null) {
+        info.innerHTML += "<h1>" + exoplaneta.pl_name +"</h1>";
+    }
+
+    if(exoplaneta.pl_rade != null) {
+        info.innerHTML += `<p>Radio: ${exoplaneta.pl_rade} radios terrestres</p>`;
+    }
+    if(exoplaneta.pl_masse != null) {
+        info.innerHTML += `<p>Masa: ${exoplaneta.pl_masse} masas terrestres </p>`;
+    }
+
+    if(exoplaneta.sy_dist != null) {
+        info.innerHTML += `<p>Distancia del sistema solar: ${exoplaneta.sy_dist} años luz</p>`;
+    }
+
+    if(exoplaneta.disc_year != null) {
+        info.innerHTML += `<p>Descubierto en: ${exoplaneta.disc_year}</p>`;
+    }
+
+    const tache = document.createElement("div");
+    tache.textContent = "X";
+    tache.classList.add("tache");
+    tache.id = `tache`+ info.id;
+    tache.addEventListener("click", ocultarInfoPlaneta);
+    info.appendChild(tache);
+
+}
+
+function ocultarInfoPlaneta(e) {
+    console.log("click");
+    let id = e.target.id;
+    console.log(id);
+    let i = id.substring(5);
+    console.log(i);
+    let info = document.getElementById(i);
+    info.style.display = "none";
+    pausarJuego();
+
+}
+
+function mostrarInfo(i) {
+    let info = document.getElementById(`info`+ i);
+    console.log(info)
+    info.style.display = "flex";
 }
 
 
