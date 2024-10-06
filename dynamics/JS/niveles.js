@@ -7,6 +7,7 @@ window.addEventListener("load", () => {
     const planetas = [
         {alt: "Venus en tránsito de nuestro sol", img: "../assets/media/img/venus.jpg", link: "./simulador.html"},
         {alt: "BD-08 2823 b", img: "../assets/media/img/BD_08_2823_b.png", link: "./diana.html"},
+        {alt: "HAT-P-7 b", img: "../assets/media/img/HAT_P_7_b.png", link: "../frogger/index.html"},
     ]
 
     const contenedorPlanetas = document.querySelector(".mundos");
