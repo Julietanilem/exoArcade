@@ -2,9 +2,13 @@ window.addEventListener("load", () => {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.height = window.innerHeight;
+    let isDespegado = false;
 
     const planetas = [
         {alt: "Venus en tránsito de nuestro sol", img: "../assets/media/img/venus.jpg", link: "./simulador.html"},
+        {alt: "BD-08 2823 b", img: "../assets/media/img/BD_08_2823_b.png", link: "./diana.html"},
+        {alt: "HAT-P-7 b", img: "../assets/media/img/HAT_P_7_b.png", link: "../frogger/index.html"},
+        {alt: "KELT-12 b", img: "../assets/media/img/KELT_12_b.png", link: "./memorama.html"},
     ]
 
     const contenedorPlanetas = document.querySelector(".mundos");
@@ -17,6 +21,8 @@ window.addEventListener("load", () => {
         img.alt = planetas[i].alt;
         img.addEventListener("click", () => {
             // animacion cohete y luego cambia de ventana
+            isDespegado = true;
+            cohete.sy = 72 * Math.floor(Math.random() * 4);
             cohete.despega(planetas[i].link);
         });
         contenedorPlanetas.appendChild(img);
@@ -58,7 +64,6 @@ window.addEventListener("load", () => {
         async despega(link) {
             while (this.dy > 0) {
                 this.dy -= 5;
-                this.dibujar();
                 // espera 
 	            await new Promise (resolve => setTimeout(resolve, 0.5)); 
             }
@@ -68,5 +73,14 @@ window.addEventListener("load", () => {
     }
 
     const cohete = new SpritesCohete(0, 0);
-    cohete.dibujar();
+    
+    function dibujar() {
+        if (!isDespegado) {
+            cohete.sy = 72 * Math.floor(Math.random() * 4);
+        }
+        cohete.dibujar();
+        window.requestAnimationFrame(dibujar);
+    }
+    
+    window.requestAnimationFrame(dibujar);
 });
