@@ -73,7 +73,7 @@ function sendMessage() {
         },
         body: JSON.stringify({
             answer: userMessage,
-            correct_answer: correctAnswer,
+            correct_answer: correctAnswer
         })
     })
     .then(response => response.json())
