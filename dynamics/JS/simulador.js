@@ -80,7 +80,6 @@ window.addEventListener("load", () => {
         planeta.id = `planeta${i+1}`
         planeta.classList.add("planeta");
         planeta.addEventListener("click", despliegarInfoPlaneta);
-        
 
         // info
         const info = document.createElement("div");
@@ -104,6 +103,7 @@ window.addEventListener("load", () => {
         campoEspacio.appendChild(planeta);
         campoEspacio.appendChild(info);
     }
+
     const planetas = document.querySelectorAll(".planeta");
 
     function despliegarInfoPlaneta(e) {
@@ -139,5 +139,19 @@ window.addEventListener("load", () => {
                 break;
         }
     });
+
+    let exoplanetasData;
+    let exoplanetasDestino;
+    fetch("../data.json")
+        .then((response)=>response.json())
+        .then((data)=> {
+            exoplanetasData = data
+            exoplanetasDestino = new Set();
+            while (exoplanetasDestino.size < 5) {
+                exoplanetasDestino.add(exoplanetasData[Math.floor(Math.random()*exoplanetasData.length)]);
+            }
+            console.log(exoplanetasDestino); 
+        }
+    );
 
 });
