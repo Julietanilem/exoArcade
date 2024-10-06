@@ -26,7 +26,6 @@
     object-fit: cover;
     scale: 1.7;
     filter: brightness(4);
-    z-index: 2;
   }
 
   .ayuda {
@@ -90,6 +89,15 @@
     box-shadow: 0 0 15px rgba(56, 56, 56, 0.5);
     animation: orbitaPlaneta 10s linear infinite;
     cursor: pointer;
+    z-index: -1;
+}
+
+.infoPlaneta > h1 {
+  font-size: xx-large;
+}
+
+.infoPlaneta > p {
+  font-size: large;
 }
 
 .infoPlaneta {
@@ -98,6 +106,12 @@
   border-radius: 5px;
   width: 100vw;
   height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .tache {

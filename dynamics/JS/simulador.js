@@ -1,17 +1,28 @@
-// mapa de espacio 1:10
-
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
 
     const VARIACION_PLANETA = 10;
+    const COLORES_PLANETA = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "brown", "grey", "black"];
+    const NUMERO_PLANETAS = COLORES_PLANETA.length;
 
     const ayuda = document.querySelector('.ayuda');
     const tooltip = document.querySelector('.tooltip');
+
+    let exoplanetasData;
+    let exoplanetasDestino = new Set();
+    async function fetchData() {
+        const response = await fetch("../data.json");
+        const data = await response.json();
+        exoplanetasData = data;
+        while (exoplanetasDestino.size < NUMERO_PLANETAS) {
+            exoplanetasDestino.add(exoplanetasData[Math.floor(Math.random() * exoplanetasData.length)]);
+        }
+    }
+    await fetchData();
 
     ayuda.addEventListener('mouseenter', () => {
         tooltip.style.visibility = 'visible';
         tooltip.style.opacity = '1';
     });
-
     ayuda.addEventListener('mouseleave', () => {
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
@@ -67,15 +78,18 @@ window.addEventListener("load", () => {
     }
 
     const escabina = new Cabina("yo",0,0);
-
     const campoEspacio = document.querySelector(".campoEspacio");
-    // Crea planetas
-    const numeroPlanetas = 1;
-    for (let i = 0; i < numeroPlanetas; i++) {
+    
+
+    let i=0;
+    for (let [key, value] of exoplanetasDestino.entries()) {
         const planeta = document.createElement("div");
-        planeta.style.top = -100 + "px";
-        planeta.style.right = 500 + "px";
-        planeta.style.background = "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, blue 100%)"
+
+        planeta.style.top = Math.floor(Math.random() * 2001) - 2000 + "px";
+        planeta.style.right = Math.floor(Math.random() * 2001) - 2000 + "px";
+        // random color
+        color = COLORES_PLANETA[Math.floor(Math.random() * COLORES_PLANETA.length)];
+        planeta.style.background = `linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, ${color} 100%)`
         // id
         planeta.id = `planeta${i+1}`
         planeta.classList.add("planeta");
@@ -89,9 +103,36 @@ window.addEventListener("load", () => {
 
 
         const descripcion = document.createElement("div");
-        descripcion.textContent = "Planeta";
-        descripcion.classList.add("descripcion");
-        info.appendChild(descripcion);
+
+        if (value.pl_name != null) {
+            const titulo = document.createElement("h1");
+            titulo.textContent = value.pl_name;
+            info.appendChild(titulo);
+        }
+
+        if (value.disc_year != null) {
+            const descubrimiento = document.createElement("p");
+            descubrimiento.textContent = `Descubrimiento: ${value.disc_year}`;
+            info.appendChild(descubrimiento);
+        }
+
+        if (value.pl_rade != null) {
+            const radio = document.createElement("p");
+            radio.textContent = `Radio: ${value.pl_rade}`;
+            info.appendChild(radio);
+        }
+
+        if (value.pl_masse != null) {
+            const masa = document.createElement("p");
+            masa.textContent = `Masa: ${value.pl_masse}`;
+            info.appendChild(masa);
+        }
+
+        if (value.sy_dist != null) {
+            const distanciaSistemaSolar = document.createElement("p");
+            distanciaSistemaSolar.textContent = `Distancia del sistema solar: ${value.sy_dist}`;
+            info.appendChild(distanciaSistemaSolar);
+        }
 
         const tache = document.createElement("div");
         tache.textContent = "X";
@@ -102,6 +143,7 @@ window.addEventListener("load", () => {
 
         campoEspacio.appendChild(planeta);
         campoEspacio.appendChild(info);
+        i++;
     }
 
     const planetas = document.querySelectorAll(".planeta");
@@ -139,19 +181,5 @@ window.addEventListener("load", () => {
                 break;
         }
     });
-
-    let exoplanetasData;
-    let exoplanetasDestino;
-    fetch("../data.json")
-        .then((response)=>response.json())
-        .then((data)=> {
-            exoplanetasData = data
-            exoplanetasDestino = new Set();
-            while (exoplanetasDestino.size < 5) {
-                exoplanetasDestino.add(exoplanetasData[Math.floor(Math.random()*exoplanetasData.length)]);
-            }
-            console.log(exoplanetasDestino); 
-        }
-    );
 
 });
