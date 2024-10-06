@@ -69,14 +69,6 @@ window.addEventListener("load", async () => {
         }
     }
 
-    class Planeta {
-        constructor(nombre, x,y) {
-            this.nombre = nombre;
-            this.x = x;
-            this.y = y;
-        }
-    }
-
     const escabina = new Cabina("yo",0,0);
     const campoEspacio = document.querySelector(".campoEspacio");
     
@@ -101,8 +93,6 @@ window.addEventListener("load", async () => {
         info.classList.add("oculto");
         info.id = `infoPlaneta${i+1}`
 
-
-        const descripcion = document.createElement("div");
 
         if (value.pl_name != null) {
             const titulo = document.createElement("h1");
@@ -145,8 +135,6 @@ window.addEventListener("load", async () => {
         campoEspacio.appendChild(info);
         i++;
     }
-
-    const planetas = document.querySelectorAll(".planeta");
 
     function despliegarInfoPlaneta(e) {
         let id = e.target.id;
