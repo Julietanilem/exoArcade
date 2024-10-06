@@ -46,7 +46,7 @@ var llegoTierra=0;
 var llegoSaturno=0;
 var impreso=false;
 class Planeta {
-    constructor (x, y, r, img, tamano){
+    constructor (x, y, r, img, tamano, nombre){
         this.x = x;
         this.y = y;
         this.r = r;
@@ -157,26 +157,34 @@ fetch("../data.json").then((response)=>response.json()).then((data)=>
         console.log([...exoplanetasDestino]); 
         exoplanetasDestino = [...exoplanetasDestino];
         colocarPlanetas()
-        
-        
+        planeta1.name  = exoplanetasDestino[0].pl_name;
+        planeta2.name  = exoplanetasDestino[1].pl_name;
+        planeta3.name  = exoplanetasDestino[2].pl_name;
+        planeta4.name  = exoplanetasDestino[3].pl_name;
         fondo.src = "./statics/img/space.jpg";
 
-        
-        planeta1.img = new Image();
-        planeta1.img.src = "./statics/img/marte.png"
-        planeta2.img = new Image();
-        planeta2.img.src = "./statics/img/tierra.png";
-        planeta3.img = new Image();
-        planeta3.img.src = "./statics/img/neptuno.png";
-        planeta4.img = new Image();
-        planeta4.img.src = "./statics/img/saturno.png";
-        
-        maxTam = Math.max(exoplanetasDestino[0].pl_rade, exoplanetasDestino[1].pl_rade, exoplanetasDestino[2].pl_rade, exoplanetasDestino[3].pl_rade);
+        planetas = [planeta1, planeta2, planeta3, planeta4];
+        imagenes = ["./statics/img/marte.png", "./statics/img/neptuno.png", "./statics/img/tierra.png", "./statics/img/saturno.png"];
+        for (planeta of planetas){
+            planeta.img = new Image();
+            planeta.img.src = imagenes[planetas.indexOf(planeta)];
+            console.log(planeta.img.src);  
+        }
+    
+        // el maximo debe medir 120, despues 100, 80 y 60
 
-        planeta1.tamano = exoplanetasDestino[0].pl_rade / (maxTam)| 100;
-        planeta2.tamano = exoplanetasDestino[1].pl_rade/ (maxTam) | 100;
-        planeta3.tamano = exoplanetasDestino[2].pl_rade / (maxTam) | 100;
-        planeta4.tamano = exoplanetasDestino[3].pl_rade/maxTam | 100;
+
+         maxTam = Math.max(exoplanetasDestino[0].pl_rade, exoplanetasDestino[1].pl_rade, exoplanetasDestino[2].pl_rade, exoplanetasDestino[3].pl_rade);
+        
+        planeta1.tamano = 2 * (exoplanetasDestino[0].pl_rade / maxTam)| 80;
+        planeta2.tamano = 2 * (exoplanetasDestino[1].pl_rade/ maxTam) | 90;
+        planeta3.tamano = 2 * (exoplanetasDestino[2].pl_rade / maxTam) | 80;
+        planeta4.tamano = 2 * (exoplanetasDestino[3].pl_rade/ maxTam) | 100;
+        
+        console.log(planeta1.tamano);
+        console.log(planeta2.tamano);
+        console.log(planeta3.tamano);
+        console.log(planeta4.tamano);
         fondoJuego();
     }
     
@@ -402,10 +410,11 @@ cohete3.dibujar();
 const cohete4 = new Cohetes(0, 216, 800, 610, 800);
 cohete4.dibujar();
 
-ctx.drawImage(planeta1.img, poXPrimera,0,120,120);
-ctx.drawImage(planeta2.img, posXSegunda,-20,260,170);
-ctx.drawImage(planeta3.img, posXTercera,0,120,120);
-ctx.drawImage(planeta4.img, posXCuarta,0,120,120);
+planeta1.dibujar();
+planeta2.dibujar();
+planeta3.dibujar();
+planeta4.dibujar();
+
 inicioNaves();
 
 
@@ -413,10 +422,10 @@ document.addEventListener("keydown", (evento)=>{
     if(vidas>0 && !pausa)
     {
         ctx.drawImage(fondo, 0,0,1000,700);
-        ctx.drawImage(planeta1.img, poXPrimera,0,120,120);
-        ctx.drawImage(planeta2.img, posXSegunda,-20,260,170);
-        ctx.drawImage(planeta3.img, posXTercera,0,120,120);
-        ctx.drawImage(planeta4.img, posXCuarta,0,120,120);
+        planeta1.dibujar();
+        planeta2.dibujar();
+        planeta3.dibujar();
+        planeta4.dibujar();
 
         if(elegido!=cohete1)
         {
@@ -448,7 +457,8 @@ document.addEventListener("keydown", (evento)=>{
             cohete1.dibujar();
         }
         if(cohete2.dx<=posXTercera+70 && cohete2.dx>=posXTercera+10 && cohete2.dy<=20 && cohete2.dy>=0)
-        {
+        {   
+            mostrarInfo(exoplanetasDestino[2]);
             elegido=cohete3;
             mensaje.innerText="Lleva esta navecita hacia " + exoplanetasDestino[2].pl_name;
             cohete2.dibujar();
@@ -658,5 +668,10 @@ pausar.addEventListener("click", (evento)=>{
         }, 1000);
     }
 });
+
+function mostrarInfo(exoplaneta){
+    
+}
+
 
 window.requestAnimationFrame(dibujar);
