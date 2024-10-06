@@ -1,0 +1,18 @@
+.title {
+    position: absolute;
+    width: 100vw;
+    display: inline-flex;
+    justify-content: center;
+    bottom: 35vh;
+    text-align: center;
+}
+#ganaste {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    place-items: center;
+    font-size: 4em;
+    font-weight: bolder;
+}
