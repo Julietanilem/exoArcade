@@ -33,11 +33,11 @@ We aim to make exoplanet education not only accessible but also enjoyable, espec
 
 ### What exactly does it do?
 
-Exo-Arcade is an educational game that helps students learn about exoplanets through engaging, interactive mini-games. It provides four main activities: a **trivia quiz** to test and expand knowledge about exoplanetary systems, a **rocket cabin simulator** that offers an immersive space exploration experience, a **"Frogger"-style game** that requires players to navigate a spaceship to a specified exoplanet, and a **dart game** that challenges players to estimate the radius of different exoplanets.
+Exo-Arcade is an educational game designed to help students learn about exoplanets through engaging, interactive mini-games. It offers five main activities: a trivia quiz to test and expand knowledge about exoplanetary systems, a rocket cabin simulator that provides an immersive space exploration experience, a 'Frogger'-style game where players navigate a spaceship to a specified exoplanet, a dart game that challenges players to estimate the radius of different exoplanets, and finally, a memory game to help reinforce the knowledge about exoplanets.
 
 ### How does it work?
 
-Exo-Arcade is **hosted on a web platform**, making it accessible to anyone with internet access. It uses a combination of HTML, CSS, and JavaScript to create a smooth and visually appealing user experience. Each mini-game is designed with intuitive controls to help players focus on learning while having fun. Players interact with the trivia, rocket simulation, navigation, and dart challenges directly through their browser. 
+Exo-Arcade is **hosted on a web platform**, making it accessible to anyone with internet access. It uses a combination of HTML, CSS, and JavaScript to create a smooth and visually appealing user experience. Each mini-game is designed with intuitive controls to help players focus on learning while having fun. Players interact with the trivia, rocket simulation, navigation, memory game, and dart challenges directly through their browser. 
 
 ### What benefits does it have? 
 
@@ -61,6 +61,8 @@ To develop Exo-Arcade, we used:
 ## Use of Artificial Intelligence
 
 - [DALL·E 3](https://openai.com/index/dall-e-3/). Used for generating the team logo.
+- [CHAT-GPT](https://chatgpt.com/).Used for translating text into English or Spanish
+- [GEMINI](https://gemini.google.com/). Used in the trivia game to generate questions 
 
 ## Space Agency Data
 
