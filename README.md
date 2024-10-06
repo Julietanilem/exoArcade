@@ -3,7 +3,6 @@
 ## Members
 
 - Flores Morán Julieta Melina
-- Morales Castillo Luis Alan
 - Zarco Romero José Antonio 
 
 ### About the Team
