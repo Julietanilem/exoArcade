@@ -4,6 +4,19 @@ window.addEventListener("load", () => {
 
     const VARIACION_PLANETA = 10;
 
+    const ayuda = document.querySelector('.ayuda');
+    const tooltip = document.querySelector('.tooltip');
+
+    ayuda.addEventListener('mouseenter', () => {
+        tooltip.style.visibility = 'visible';
+        tooltip.style.opacity = '1';
+    });
+
+    ayuda.addEventListener('mouseleave', () => {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+    });
+
 
     class Cabina {
         constructor(piloto, x, y) {
