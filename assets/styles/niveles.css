@@ -1,0 +1,47 @@
+.App{
+    box-sizing: content-box;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+.main {
+    padding: 25px;
+}
+
+.contenedor {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.contenedor .cohete {
+    flex: 1;
+}
+.contenedor .niveles {
+    padding: 25px;
+    flex: 2;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.mundos{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+    grid-gap: 5px;
+    padding: 5px;
+}
+
+.mundos img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+}

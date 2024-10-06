@@ -10,17 +10,23 @@
   .contenedorCabina {
     position: absolute;
     bottom: 0;
-    height: 25vh;
+    height: 20vh;
     width: 100vw;
     display: grid;
     place-items: center;
   }
   .contenedorCabina > .ventana{
     border-radius: 5px;
-    background: none;
     border: 5px solid blue;
     height: 60%;
     width: 70%;
+  }
+
+  .contenedorCabina img {
+    object-fit: cover;
+    scale: 1.7;
+    filter: brightness(4);
+    z-index: 2;
   }
 
   .ayuda {
@@ -37,7 +43,28 @@
     border-radius: 50%;
     font-weight: bolder;
     font-size: larger;
+    cursor: pointer;
   }
+
+  .tooltip {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.ayuda:hover + .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
 
 .mapa {
     position: absolute;
@@ -63,16 +90,6 @@
     box-shadow: 0 0 15px rgba(56, 56, 56, 0.5);
     animation: orbitaPlaneta 10s linear infinite;
     cursor: pointer;
-}
-
-@keyframes orbitaPlaneta {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-    
 }
 
 .infoPlaneta {
