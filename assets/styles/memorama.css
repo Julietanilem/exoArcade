@@ -51,6 +51,6 @@ body {
 
 .marcada {
     animation: none;
-    background-color: #d4f8aa;
+    background: #d4f8aa!important;
     font-weight: bolder;
 }

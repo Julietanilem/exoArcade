@@ -8,6 +8,7 @@ window.addEventListener("load", () => {
         {alt: "Venus en tránsito de nuestro sol", img: "../assets/media/img/venus.jpg", link: "./simulador.html"},
         {alt: "BD-08 2823 b", img: "../assets/media/img/BD_08_2823_b.png", link: "./diana.html"},
         {alt: "HAT-P-7 b", img: "../assets/media/img/HAT_P_7_b.png", link: "../frogger/index.html"},
+        {alt: "KELT-12 b", img: "../assets/media/img/KELT_12_b.png", link: "./memorama.html"},
     ]
 
     const contenedorPlanetas = document.querySelector(".mundos");
