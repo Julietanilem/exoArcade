@@ -5,7 +5,6 @@ window.addEventListener("load", ()=>{
         record.innerHTML="Record:"+cookie_record_carga[1];
     }
 });
-
     
 const canvas = document.getElementById("spaceTravel");
 const ctx = canvas.getContext("2d"); 
@@ -19,20 +18,11 @@ const audioPerdio= new Audio ("./statics/audio/perdiste.mp3");
 const audioGano= new Audio ("./statics/audio/gano.mp3");
 
 
+
+
 audioPerdio.duration= 0.5;
 
-var exoplanetasData 
-fetch("../data.json").then((response)=>response.json()).then((data)=>
-    {
-        exoplanetasData = data
 
-        exoplanetasDestino = new Set();
-        while (exoplanetasDestino.size < 5) {
-            exoplanetasDestino.add(exoplanetasData[Math.floor(Math.random()*exoplanetasData.length)]);
-        }
-        console.log(exoplanetasDestino); 
-    }
-);
 
 
 
@@ -55,6 +45,32 @@ var llegoNeptuno=0;
 var llegoTierra=0;
 var llegoSaturno=0;
 var impreso=false;
+class Planeta {
+    constructor (x, y, r, img, tamano){
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.img = img;
+        this.tamaño = 100;
+    }
+
+    dibujar(){
+        ctx.drawImage(this.img, this.x, this.y, this.r, this.r);
+    }
+
+    revisar(cohete){
+        if(cohete.dx>=this.x && cohete.dx<=this.x+this.r && cohete.dy>=this.y && cohete.dy<=this.y+this.r)
+        {
+            cohete.dx=cohete.iniciox;
+            cohete.dy=610;
+            vidas-=1;
+            vida.innerHTML="Vidas: "+vidas;
+            audioPierde.volume=1;
+            audioPierde.play();
+        }
+    }
+
+}
 
 function inicioNaves()
 {
@@ -104,10 +120,14 @@ function colocarPlanetas()
 
     }while(indices.includes(indice));
 
-    planetas =new Array (poXPrimera, posXTercera, posXSegunda, posXCuarta);
+    planeta1.x=poXPrimera;
+    planeta2.x=posXSegunda;
+    planeta3.x=posXTercera;
+    planeta4.x=posXCuarta;
 
 
-    mensaje.innerText="Lleva esta navecita hacia Marte";
+    mensaje.innerText="Lleva esta navecita hacia "+exoplanetasDestino[0].pl_name;
+    console.log(exoplanetasDestino[0]);
 }
 
 function fondoJuegoAnimacion()
@@ -118,31 +138,60 @@ function fondoJuegoAnimacion()
     cohete3.dibujar();
     cohete4.dibujar();
 }
-colocarPlanetas()
 
 const fondo = new Image();
-fondo.src = "./statics/img/space.jpg";
-const marte = new Image();
-marte.src = "./statics/img/marte.png";
-const saturno = new Image();
-saturno.src = "./statics/img/saturno.png";
-const neptuno = new Image();
-neptuno.src = "./statics/img/neptuno.png";
-const tierra = new Image();
-tierra.src = "./statics/img/tierra.png";
+
+const planeta1 = new Planeta(0, 0, 100, fondo, 60);
+const planeta2 = new Planeta(0, 0, 100, fondo,60);
+const planeta3 = new Planeta(0, 0, 100, fondo,60);
+const planeta4 = new Planeta(0, 0, 100, fondo,60);
+
+exoplanetasDestino = new Set();
+
+fetch("../data.json").then((response)=>response.json()).then((data)=>
+    {
+        
+        while (exoplanetasDestino.size < 5) {
+            exoplanetasDestino.add(data[Math.floor(Math.random()*data.length)]);
+        }
+        console.log([...exoplanetasDestino]); 
+        exoplanetasDestino = [...exoplanetasDestino];
+        colocarPlanetas()
+        
+        
+        fondo.src = "./statics/img/space.jpg";
+
+        
+        planeta1.img = new Image();
+        planeta1.img.src = "./statics/img/marte.png"
+        planeta2.img = new Image();
+        planeta2.img.src = "./statics/img/tierra.png";
+        planeta3.img = new Image();
+        planeta3.img.src = "./statics/img/neptuno.png";
+        planeta4.img = new Image();
+        planeta4.img.src = "./statics/img/saturno.png";
+        
+        maxTam = Math.max(exoplanetasDestino[0].pl_rade, exoplanetasDestino[1].pl_rade, exoplanetasDestino[2].pl_rade, exoplanetasDestino[3].pl_rade);
+
+        planeta1.tamano = exoplanetasDestino[0].pl_rade / (maxTam)| 100;
+        planeta2.tamano = exoplanetasDestino[1].pl_rade/ (maxTam) | 100;
+        planeta3.tamano = exoplanetasDestino[2].pl_rade / (maxTam) | 100;
+        planeta4.tamano = exoplanetasDestino[3].pl_rade/maxTam | 100;
+        fondoJuego();
+    }
+    
+);
+
 
 function fondoJuego()
 {
     ctx.drawImage(fondo, 0,0,1000,700);
-    ctx.drawImage(marte, poXPrimera,0,120,120);
-    ctx.drawImage(saturno, posXSegunda,-20,260,170);
-    ctx.drawImage(neptuno, posXTercera,0,120,120)
-    ctx.drawImage(tierra, posXCuarta,0,120,120);
+    planeta1.dibujar();
+    planeta2.dibujar();
+    planeta3.dibujar();
+    planeta4.dibujar();
 }
-window.addEventListener("load", ()=>{
-    ///////DIBUJANDO LAS IMAGENES/////  
-    fondoJuego();
-});
+
 ///////MOVIMIENTO DE NAVES////////
 class Cohetes 
 {
@@ -353,20 +402,21 @@ cohete3.dibujar();
 const cohete4 = new Cohetes(0, 216, 800, 610, 800);
 cohete4.dibujar();
 
-ctx.drawImage(marte, poXPrimera,0,120,120);
-ctx.drawImage(saturno, posXSegunda,-20,260,170);
-ctx.drawImage(neptuno, posXTercera,0,120,120);
-ctx.drawImage(tierra, posXCuarta,0,120,120);
+ctx.drawImage(planeta1.img, poXPrimera,0,120,120);
+ctx.drawImage(planeta2.img, posXSegunda,-20,260,170);
+ctx.drawImage(planeta3.img, posXTercera,0,120,120);
+ctx.drawImage(planeta4.img, posXCuarta,0,120,120);
 inicioNaves();
+
 
 document.addEventListener("keydown", (evento)=>{
     if(vidas>0 && !pausa)
     {
         ctx.drawImage(fondo, 0,0,1000,700);
-        ctx.drawImage(marte, poXPrimera,0,120,120);
-        ctx.drawImage(saturno, posXSegunda,-20,260,170);
-        ctx.drawImage(neptuno, posXTercera,0,120,120);
-        ctx.drawImage(tierra, posXCuarta,0,120,120);
+        ctx.drawImage(planeta1.img, poXPrimera,0,120,120);
+        ctx.drawImage(planeta2.img, posXSegunda,-20,260,170);
+        ctx.drawImage(planeta3.img, posXTercera,0,120,120);
+        ctx.drawImage(planeta4.img, posXCuarta,0,120,120);
 
         if(elegido!=cohete1)
         {
@@ -387,7 +437,7 @@ document.addEventListener("keydown", (evento)=>{
         if(cohete1.dx<=poXPrimera+60 && cohete1.dx>=poXPrimera && cohete1.dy<=30 && cohete1.dy>=0)
         {
             elegido=cohete2;
-            mensaje.innerText="Lleva esta navecita hasta Neptuno";
+            mensaje.innerText="Lleva esta navecita hasta " + exoplanetasDestino[1].pl_name;
             if(llegoMarte==0)
             { 
                 audioGana.volume=0.8;
@@ -400,7 +450,7 @@ document.addEventListener("keydown", (evento)=>{
         if(cohete2.dx<=posXTercera+70 && cohete2.dx>=posXTercera+10 && cohete2.dy<=20 && cohete2.dy>=0)
         {
             elegido=cohete3;
-            mensaje.innerText="Lleva esta navecita hacia Saturno";
+            mensaje.innerText="Lleva esta navecita hacia " + exoplanetasDestino[2].pl_name;
             cohete2.dibujar();
             if(llegoNeptuno==0)
             { 
@@ -412,7 +462,7 @@ document.addEventListener("keydown", (evento)=>{
         if(cohete3.dx<=posXSegunda+115 && cohete3.dx>=posXSegunda+75 && cohete3.dy<=40 && cohete3.dy>=0)
         {
             elegido=cohete4;
-            mensaje.innerText="Lleva esta navecita hacia la Tierra";
+            mensaje.innerText="Lleva esta navecita hacia"+ exoplanetasDestino[3].pl_name;
             cohete3.dibujar();
             if(llegoSaturno==0)
             { 
@@ -512,7 +562,8 @@ reiniciar.addEventListener("click", ()=>{
     fondoJuego();
     inicioNaves();
 });
-window.requestAnimationFrame(dibujar);
+
+
 //OBSTACULOS//
 function dibujar(){
   
@@ -607,3 +658,5 @@ pausar.addEventListener("click", (evento)=>{
         }, 1000);
     }
 });
+
+window.requestAnimationFrame(dibujar);
