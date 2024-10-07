@@ -64,7 +64,7 @@ function sendMessage() {
 
     // Obtener la respuesta correcta del dataset
     const correctAnswer = conversation.dataset.correctAnswer;
-
+    
     // Enviar la respuesta del usuario al backend para verificarla
     fetch(`${baseURL}check-answer`, {
         method: 'POST',
